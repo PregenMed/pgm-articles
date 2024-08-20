@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: pgm-articles
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${PGM-ARTICLES-DB-NAME:pgm-article-db}
+    username: ${PGM-ARTICLES-DB-USERNAME:pgm}
+    password: ${PGM-ARTICLES-DB-PASSWORD:pgm}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
