@@ -5,6 +5,7 @@ import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.A
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleTitleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.entity.ArticleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -31,5 +32,7 @@ public interface ArticleMapper {
     AddArticleResponse mapToAddArticleResponse(Article article);
 
     UpdateArticleContentResponse mapToUpdateArticleContentResponse(Article article);
+
+    UpdateArticleTitleResponse mapToUpateArticleTitleResponse(Article article);
 
 }

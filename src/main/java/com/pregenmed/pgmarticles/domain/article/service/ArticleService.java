@@ -15,4 +15,6 @@ public interface ArticleService {
     boolean articleExistByUuid(UUID articleUUID);
 
     Article updateArticleContent(UUID articleUuid, String articleContent) throws Exception;
+
+    Article updateArticleTitle(UUID articleUuid, String title) throws Exception;
 }

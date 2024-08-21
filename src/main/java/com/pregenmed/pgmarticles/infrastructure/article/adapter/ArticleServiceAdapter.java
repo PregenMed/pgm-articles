@@ -66,6 +66,14 @@ public class ArticleServiceAdapter implements ArticleService {
         return ARTICLE_MAPPER.mapToArticle(updateArticleEntity(articleEntity));
     }
 
+    @Override
+    public Article updateArticleTitle(UUID articleUuid, String title) throws Exception {
+        // TODO add auditing
+        var articleEntity = getArticleEntityByUuid(articleUuid);
+        articleEntity.setTitle(title);
+        return ARTICLE_MAPPER.mapToArticle(updateArticleEntity(articleEntity));
+    }
+
     private ArticleEntity getArticleEntityByUuid(UUID articleUuid) throws Exception {
         return articleRepository.getArticleByUuidAndStatusNot(articleUuid, DELETED).orElseThrow(() -> new Exception());       //TODO add custom exception when you start implementing exception handling and domain exceptions
     }

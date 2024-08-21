@@ -4,11 +4,14 @@ import com.pregenmed.pgmarticles.domain.article.usecase.AddArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.DeleteArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.GetArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleContentUseCase;
+import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleTitleUseCase;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleContentRequest;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleTitleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleTitleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,6 +39,7 @@ public class ArticleControllerAdapter implements ArticleController {
     private final AddArticleUseCase addArticleUseCase;
     private final DeleteArticleUseCase deleteArticleUseCase;
     private final UpdateArticleContentUseCase updateArticleContentUseCase;
+    private final UpdateArticleTitleUseCase updateArticleTitleUseCase;
 
     @Override
     @GetMapping("/{articleUuid}")
@@ -62,5 +66,11 @@ public class ArticleControllerAdapter implements ArticleController {
     @PutMapping("/{articleUuid}/content")
     public UpdateArticleContentResponse updateContent(@RequestBody UpdateArticleContentRequest updateArticleContentRequest, @PathVariable UUID articleUuid) throws Exception {
         return ARTICLE_MAPPER.mapToUpdateArticleContentResponse(updateArticleContentUseCase.execute(articleUuid, updateArticleContentRequest.getContent()));
+    }
+
+    @Override
+    @PutMapping("/{articleUuid/title")
+    public UpdateArticleTitleResponse updateTitle(UpdateArticleTitleRequest updateArticleTitleRequest, UUID articleUuid) throws Exception {
+        return ARTICLE_MAPPER.mapToUpateArticleTitleResponse(updateArticleTitleUseCase.execute(articleUuid, updateArticleTitleRequest.getTitle()));
     }
 }
