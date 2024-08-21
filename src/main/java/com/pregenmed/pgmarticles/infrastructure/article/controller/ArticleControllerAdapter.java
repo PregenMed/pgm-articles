@@ -4,13 +4,17 @@ import com.pregenmed.pgmarticles.domain.article.usecase.AddArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.DeleteArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.GetArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleContentUseCase;
+import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleStatusUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleTitleUseCase;
+import com.pregenmed.pgmarticles.domain.article.usecase.adapter.UpdateArticleTitleUseCaseAdapter;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleContentRequest;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleStatusRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleTitleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleStatusResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleTitleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +44,7 @@ public class ArticleControllerAdapter implements ArticleController {
     private final DeleteArticleUseCase deleteArticleUseCase;
     private final UpdateArticleContentUseCase updateArticleContentUseCase;
     private final UpdateArticleTitleUseCase updateArticleTitleUseCase;
+    private final UpdateArticleStatusUseCase updateArticleStatusUseCase;
 
     @Override
     @GetMapping("/{articleUuid}")
@@ -72,5 +77,11 @@ public class ArticleControllerAdapter implements ArticleController {
     @PutMapping("/{articleUuid/title")
     public UpdateArticleTitleResponse updateTitle(UpdateArticleTitleRequest updateArticleTitleRequest, UUID articleUuid) throws Exception {
         return ARTICLE_MAPPER.mapToUpateArticleTitleResponse(updateArticleTitleUseCase.execute(articleUuid, updateArticleTitleRequest.getTitle()));
+    }
+
+    @Override
+    @PutMapping("/{articleUuid}/status")
+    public UpdateArticleStatusResponse updateStatus(UpdateArticleStatusRequest updateArticleTitleRequest, UUID articleUuid) throws Exception {
+        return ARTICLE_MAPPER.mapToUpdateArticleStatusResponse(updateArticleStatusUseCase.execute(articleUuid, updateArticleTitleRequest.getStatus()));
     }
 }

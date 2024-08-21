@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import static com.pregenmed.pgmarticles.infrastructure.article.entity.ArticleStatusEntity.DELETED;
 import static com.pregenmed.pgmarticles.infrastructure.article.mapper.ArticleMapper.ARTICLE_MAPPER;
+import static com.pregenmed.pgmarticles.infrastructure.article.mapper.ArticleStatusMapper.ARTICLE_STATUS_MAPPER;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +25,7 @@ public class ArticleServiceAdapter implements ArticleService {
     public Article getArticleByUuid(UUID articleUuid) throws Exception {
         //TODO exception handling
         // TODO add to redis when ready
-
         return ARTICLE_MAPPER.mapToArticle(getArticleEntityByUuid(articleUuid));
-
     }
 
     @Override
@@ -50,7 +49,6 @@ public class ArticleServiceAdapter implements ArticleService {
             // some unexpected exception
             throw new Exception();
         }
-
     }
 
     @Override
@@ -71,6 +69,14 @@ public class ArticleServiceAdapter implements ArticleService {
         // TODO add auditing
         var articleEntity = getArticleEntityByUuid(articleUuid);
         articleEntity.setTitle(title);
+        return ARTICLE_MAPPER.mapToArticle(updateArticleEntity(articleEntity));
+    }
+
+    @Override
+    public Article updateArticleStatus(UUID articleUuid, ArticleStatus articleStatus) throws Exception {
+        // TODO add auditing
+        var articleEntity = getArticleEntityByUuid(articleUuid);
+        articleEntity.setStatus(ARTICLE_STATUS_MAPPER.mapToArticleStatusEntity(articleStatus));
         return ARTICLE_MAPPER.mapToArticle(updateArticleEntity(articleEntity));
     }
 
