@@ -18,4 +18,6 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Integer>
     Optional<ArticleEntity> getArticleByUuidAndStatusNot(
             @Param(value = "uuid") UUID articleUuid,
             @Param(value = "status") ArticleStatusEntity articleStatusEntity);
+
+    boolean existsByUuid(UUID articleUuid);
 }

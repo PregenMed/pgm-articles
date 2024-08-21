@@ -3,6 +3,7 @@ package com.pregenmed.pgmarticles.infrastructure.article.adapter;
 import com.pregenmed.pgmarticles.domain.article.model.Article;
 import com.pregenmed.pgmarticles.domain.article.model.ArticleStatus;
 import com.pregenmed.pgmarticles.domain.article.service.ArticleService;
+import com.pregenmed.pgmarticles.infrastructure.article.entity.ArticleEntity;
 import com.pregenmed.pgmarticles.infrastructure.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,7 @@ public class ArticleServiceAdapter implements ArticleService {
         //TODO exception handling
         // TODO add to redis when ready
 
-        return ARTICLE_MAPPER.mapToArticle(articleRepository.getArticleByUuidAndStatusNot(articleUuid, DELETED)
-                .orElseThrow(() -> new Exception()));             //TODO add custom exception when you start implementing exception handling and domain exceptions
+        return ARTICLE_MAPPER.mapToArticle(getArticleEntityByUuid(articleUuid));
 
     }
 
@@ -53,5 +53,24 @@ public class ArticleServiceAdapter implements ArticleService {
 
     }
 
+    @Override
+    public boolean articleExistByUuid(UUID articleUUID) {
+        return articleRepository.existsByUuid(articleUUID);
+    }
 
+    @Override
+    public Article updateArticleContent(UUID articleUuid, String articleContent) throws Exception {
+        // TODO add auditing
+        var articleEntity = getArticleEntityByUuid(articleUuid);
+        articleEntity.setContent(articleContent);
+        return ARTICLE_MAPPER.mapToArticle(updateArticleEntity(articleEntity));
+    }
+
+    private ArticleEntity getArticleEntityByUuid(UUID articleUuid) throws Exception {
+        return articleRepository.getArticleByUuidAndStatusNot(articleUuid, DELETED).orElseThrow(() -> new Exception());       //TODO add custom exception when you start implementing exception handling and domain exceptions
+    }
+
+    private ArticleEntity updateArticleEntity(ArticleEntity articleEntity) {
+        return articleRepository.save(articleEntity);
+    }
 }

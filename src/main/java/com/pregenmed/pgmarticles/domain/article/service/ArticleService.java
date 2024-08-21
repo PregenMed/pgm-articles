@@ -11,4 +11,8 @@ public interface ArticleService {
     Article addArticle(Article article);
 
     boolean deleteArticle(Article article) throws Exception;
+
+    boolean articleExistByUuid(UUID articleUUID);
+
+    Article updateArticleContent(UUID articleUuid, String articleContent) throws Exception;
 }

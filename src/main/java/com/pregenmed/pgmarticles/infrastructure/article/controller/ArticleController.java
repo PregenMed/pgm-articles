@@ -1,8 +1,10 @@
 package com.pregenmed.pgmarticles.infrastructure.article.controller;
 
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleContentRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,6 +55,20 @@ public interface ArticleController {
             }
     )
     ResponseEntity<Void> deleteArticle(UUID articleUuid);
+
+    @Operation(
+            description = "Give me a new article's content and I will update it",
+            summary = "Update Article content",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"),
+                    @ApiResponse(
+                            description = "Not Found",
+                            responseCode = "404")
+            }
+    )
+    UpdateArticleContentResponse updateContent(UpdateArticleContentRequest updateArticleContentRequest, UUID articleUuid) throws Exception;
 
 
 }

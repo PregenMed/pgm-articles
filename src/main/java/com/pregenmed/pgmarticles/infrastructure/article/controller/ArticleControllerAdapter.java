@@ -3,15 +3,19 @@ package com.pregenmed.pgmarticles.infrastructure.article.controller;
 import com.pregenmed.pgmarticles.domain.article.usecase.AddArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.DeleteArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.GetArticleUseCase;
+import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleContentUseCase;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleContentRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
+import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,6 +35,7 @@ public class ArticleControllerAdapter implements ArticleController {
     private final GetArticleUseCase getArticleUseCase;
     private final AddArticleUseCase addArticleUseCase;
     private final DeleteArticleUseCase deleteArticleUseCase;
+    private final UpdateArticleContentUseCase updateArticleContentUseCase;
 
     @Override
     @GetMapping("/{articleUuid}")
@@ -51,5 +56,11 @@ public class ArticleControllerAdapter implements ArticleController {
     @DeleteMapping("/{articleUuid}")
     public ResponseEntity<Void> deleteArticle(@PathVariable UUID articleUuid) {
         return deleteArticleUseCase.deleteArticle(articleUuid) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    @Override
+    @PutMapping("/{articleUuid}/content")
+    public UpdateArticleContentResponse updateContent(@RequestBody UpdateArticleContentRequest updateArticleContentRequest, @PathVariable UUID articleUuid) throws Exception {
+        return ARTICLE_MAPPER.mapToUpdateArticleContentResponse(updateArticleContentUseCase.execute(articleUuid, updateArticleContentRequest.getContent()));
     }
 }
