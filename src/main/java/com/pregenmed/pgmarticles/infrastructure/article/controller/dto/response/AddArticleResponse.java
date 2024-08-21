@@ -8,11 +8,12 @@ import lombok.Setter;
 import java.time.Instant;
 import java.util.UUID;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetArticleByUuidResponse {
+public class AddArticleResponse {
 
     private UUID uuid;
     private String title;
@@ -20,4 +21,5 @@ public class GetArticleByUuidResponse {
     private String content;
     private Instant createdAt;
     private Instant updatedAt;
+
 }

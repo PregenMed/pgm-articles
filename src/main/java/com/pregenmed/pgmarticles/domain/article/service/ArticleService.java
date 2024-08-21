@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface ArticleService {
 
     Article getArticleByUuid(UUID uuid);
+
+    Article addArticle(Article article);
 }

@@ -1,13 +1,34 @@
 spring:
   application:
     name: pgm-articles
+  #    DATABASE
   datasource:
-    url: jdbc:postgresql://localhost:5432/${PGM-ARTICLES-DB-NAME:pgm-article-db}
-    username: ${PGM-ARTICLES-DB-USERNAME:pgm}
-    password: ${PGM-ARTICLES-DB-PASSWORD:pgm}
+    url: jdbc:postgresql://${PGM_ARTICLE_DB_URL:localhost}:${PGM_ARTICLE_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-article-db}?current_schema=${PGM_ARTICLE_SCHEMA:pgmarticle}
+    username: ${PGM_ARTICLES_DB_USERNAME:pgm}
+    password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
+    hikari:
+      maximum-pool-size: ${PGM_HIKARI_MAX_POOL_SIZE:10}
+      minimum-idle: ${PGM_HIKARI_MIN_IDLE:5}
+      idle-timeout: ${PGM_HIKARI_IDLE_TIMEOUT:30000}
+      max-lifetime: ${PGM_HIKARI_MAX_LIFETIME:1800000}
+      connection-timeout: ${PGM_HIKARI_CONNECTION_TIMEOUT:30000}
+      auto-commit: ${PGM_HIKARI_AUTO_COMMIT:true}
   jpa:
+    show-sql: true
+    open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format-sql: true
+        default_schema: ${PGM_ARTICLE_SCHEMA:pgm-article}
+
+  #FLYWAY
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/${PGM_ARTICLES_DB_NAME:pgm-article-db}
+    schemas: ${PGM_ARTICLE_SCHEMA:pgmarticle}
+    user: ${PGM_ARTICLES_DB_USERNAME:pgm}
+    password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
+    locations: classpath:db/migration
+    validate-on-migrate: true          # Validate migrations on startup

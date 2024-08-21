@@ -23,5 +23,11 @@ public class ArticleServiceAdapter implements ArticleService {
         return ARTICLE_MAPPER.mapToArticle(articleRepository.findByUuid(uuid));
     }
 
+    @Override
+    public Article addArticle(Article article) {
+        // TODO exception handling
+        return ARTICLE_MAPPER.mapToArticle(articleRepository.save(ARTICLE_MAPPER.mapToArticleEntity(article)));
+    }
+
 
 }
