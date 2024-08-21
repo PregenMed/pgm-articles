@@ -2,6 +2,7 @@ package com.pregenmed.pgmarticles.infrastructure.article.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.UUID;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 
@@ -50,6 +52,9 @@ public class ArticleEntity {
     private UUID authorUuid;
     @Column(name = "content", nullable = false, length = 10000)
     private String content;
+    @Column(name = "status", nullable = false)
+    @Enumerated(STRING)
+    private ArticleStatusEntity status;
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private Instant createdAt;

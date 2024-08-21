@@ -15,7 +15,7 @@ public class GetArticleUseCaseAdapter implements GetArticleUseCase {
     private final ArticleService articleService;
 
     @Override
-    public Article getArticle(UUID articleUuid) {
+    public Article getArticle(UUID articleUuid) throws Exception {
         return articleService.getArticleByUuid(articleUuid);
     }
 }

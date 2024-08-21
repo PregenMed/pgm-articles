@@ -5,5 +5,5 @@ import com.pregenmed.pgmarticles.domain.article.model.Article;
 import java.util.UUID;
 
 public interface GetArticleUseCase {
-   Article getArticle(UUID articleUuid);
+   Article getArticle(UUID articleUuid) throws Exception;
 }

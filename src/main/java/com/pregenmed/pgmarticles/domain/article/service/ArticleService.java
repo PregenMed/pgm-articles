@@ -6,7 +6,9 @@ import java.util.UUID;
 
 public interface ArticleService {
 
-    Article getArticleByUuid(UUID uuid);
+    Article getArticleByUuid(UUID articleUuid) throws Exception;
 
     Article addArticle(Article article);
+
+    boolean deleteArticle(Article article) throws Exception;
 }

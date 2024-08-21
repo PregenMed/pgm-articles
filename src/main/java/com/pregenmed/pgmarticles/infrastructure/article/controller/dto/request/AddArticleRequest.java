@@ -1,6 +1,7 @@
 package com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request;
 
 
+import com.pregenmed.pgmarticles.domain.article.model.ArticleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,5 @@ public class AddArticleRequest {
     private String title;
     private UUID authorUuid;
     private String content;
+    private ArticleStatus status;
 }

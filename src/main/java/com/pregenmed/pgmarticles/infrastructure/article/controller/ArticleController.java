@@ -6,6 +6,7 @@ import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public interface ArticleController {
                             responseCode = "200")
             }
     )
-    GetArticleByUuidResponse getArticleByUuid(UUID uuid);
+    GetArticleByUuidResponse getArticleByUuid(UUID articleUuid) throws Exception;
 
     @Operation(
             description = "Give me valid article and I will store it",
@@ -34,10 +35,24 @@ public interface ArticleController {
             responses = {
                     @ApiResponse(
                             description = "Created",
-                            responseCode = "1")
+                            responseCode = "201")
             }
     )
     AddArticleResponse addArticle(AddArticleRequest addArticleRequest);
+
+    @Operation(
+            description = "Give me article UUID and I will delete it",
+            summary = "Delete Article",
+            responses = {
+                    @ApiResponse(
+                            description = "No Content",
+                            responseCode = "204"),
+                    @ApiResponse(
+                            description = "Not Found",
+                            responseCode = "404")
+            }
+    )
+    ResponseEntity<Void> deleteArticle(UUID articleUuid);
 
 
 }

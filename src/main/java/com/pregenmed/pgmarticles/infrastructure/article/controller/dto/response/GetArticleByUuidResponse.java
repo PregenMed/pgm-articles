@@ -20,4 +20,5 @@ public class GetArticleByUuidResponse {
     private String content;
     private Instant createdAt;
     private Instant updatedAt;
+    private String status;
 }

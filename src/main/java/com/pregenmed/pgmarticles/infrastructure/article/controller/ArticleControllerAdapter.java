@@ -1,11 +1,14 @@
 package com.pregenmed.pgmarticles.infrastructure.article.controller;
 
 import com.pregenmed.pgmarticles.domain.article.usecase.AddArticleUseCase;
+import com.pregenmed.pgmarticles.domain.article.usecase.DeleteArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.GetArticleUseCase;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.AddArticleResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.GetArticleByUuidResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,20 +30,26 @@ import static org.springframework.http.HttpStatus.OK;
 public class ArticleControllerAdapter implements ArticleController {
     private final GetArticleUseCase getArticleUseCase;
     private final AddArticleUseCase addArticleUseCase;
+    private final DeleteArticleUseCase deleteArticleUseCase;
 
     @Override
-    @GetMapping("/{uuid}")
+    @GetMapping("/{articleUuid}")
     @ResponseStatus(OK)
-    public GetArticleByUuidResponse getArticleByUuid(@PathVariable UUID uuid) {
-        return ARTICLE_MAPPER.mapToGetArticleByUuidResponse(getArticleUseCase.getArticle(uuid));
+    public GetArticleByUuidResponse getArticleByUuid(@PathVariable UUID articleUuid) throws Exception {
+        return ARTICLE_MAPPER.mapToGetArticleByUuidResponse(getArticleUseCase.getArticle(articleUuid));
     }
 
-
-    @PostMapping()
+    @PostMapping
     @Override
     @ResponseStatus(CREATED)
     public AddArticleResponse addArticle(@RequestBody AddArticleRequest addArticleRequest) {
         return ARTICLE_MAPPER.mapToAddArticleResponse(addArticleUseCase.addArticle(
                 ARTICLE_MAPPER.mapToArticle(addArticleRequest)));
+    }
+
+    @Override
+    @DeleteMapping("/{articleUuid}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable UUID articleUuid) {
+        return deleteArticleUseCase.deleteArticle(articleUuid) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
