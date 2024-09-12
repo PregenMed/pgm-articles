@@ -90,7 +90,7 @@ public interface ArticleController {
 
     @Operation(
             description = "Give me a new article's status and I will update it",
-            summary = "Update Article status",
+            summary = "Update Articlle status",
             responses = {
                     @ApiResponse(
                             description = "Success",
