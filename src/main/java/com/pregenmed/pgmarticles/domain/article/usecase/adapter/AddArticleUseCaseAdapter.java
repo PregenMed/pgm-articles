@@ -1,5 +1,6 @@
 package com.pregenmed.pgmarticles.domain.article.usecase.adapter;
 
+import com.fasterxml.uuid.Generators;
 import com.pregenmed.pgmarticles.domain.article.model.Article;
 import com.pregenmed.pgmarticles.domain.article.service.ArticleService;
 import com.pregenmed.pgmarticles.domain.article.usecase.AddArticleUseCase;
@@ -17,7 +18,7 @@ public class AddArticleUseCaseAdapter implements AddArticleUseCase {
     @Override
     public Article addArticle(Article article) {
         //assign new article valid UUID
-        article.setUuid(UUID.randomUUID());
+        article.setUuid(Generators.timeBasedEpochGenerator().generate());
 
         return articleService.addArticle(article);
     }

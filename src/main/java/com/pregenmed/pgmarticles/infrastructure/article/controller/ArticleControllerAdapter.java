@@ -16,8 +16,10 @@ import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleContentResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleStatusResponse;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.UpdateArticleTitleResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +58,8 @@ public class ArticleControllerAdapter implements ArticleController {
     @PostMapping
     @Override
     @ResponseStatus(CREATED)
-    public AddArticleResponse addArticle(@RequestBody AddArticleRequest addArticleRequest) {
+    public AddArticleResponse addArticle(@RequestBody @Valid AddArticleRequest addArticleRequest) {
+        System.out.println(UUID.randomUUID());
         return ARTICLE_MAPPER.mapToAddArticleResponse(addArticleUseCase.addArticle(
                 ARTICLE_MAPPER.mapToArticle(addArticleRequest)));
     }
@@ -74,7 +77,7 @@ public class ArticleControllerAdapter implements ArticleController {
     }
 
     @Override
-    @PutMapping("/{articleUuid/title")
+    @PutMapping("/{articleUuid}/title")
     public UpdateArticleTitleResponse updateTitle(UpdateArticleTitleRequest updateArticleTitleRequest, UUID articleUuid) throws Exception {
         return ARTICLE_MAPPER.mapToUpateArticleTitleResponse(updateArticleTitleUseCase.execute(articleUuid, updateArticleTitleRequest.getTitle()));
     }
