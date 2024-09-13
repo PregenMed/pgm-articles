@@ -89,7 +89,7 @@ public interface ArticleController {
     UpdateArticleTitleResponse updateTitle(UpdateArticleTitleRequest updateArticleTitleRequest, UUID articleUuid) throws Exception;
 
     @Operation(
-            description = "Give me a new article's statuss and I will update it",
+             description = "Give me a new article's status and I will update it",
             summary = "Update Article status",
             responses = {
                     @ApiResponse(
