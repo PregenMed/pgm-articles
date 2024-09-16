@@ -4,6 +4,9 @@ pipeline {
         jdk 'jdk-17-latest'
         maven 'maven-3'
     }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
+    }
     stages {
         stage('Pull Request') {
             when {
@@ -36,17 +39,22 @@ pipeline {
                 }
                 stage('Build Image') {
                     steps {
-                        sh 'docker build -t pgm-articles:latest .'
+                        sh 'docker build -t pregenmed/pgm-articles:latest .'
                     }
                 }
-                stage('Docker Push'){
-                    steps{
-                        withCredentials([usernamePassword(credentialsId: 'docker_cred', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]){
-                            sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
-                            sh 'docker tag pgm-articles:latest pregenmed/pgm-articles:latest'
-                            sh 'docker push pregenmed/pgm-articles:latest'
-                            sh 'docker logout'
-                        }
+                stage('Dockerhub Login') {
+                    steps {
+                            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    }
+                }
+                stage('Dockerhub Push') {
+                    steps {
+                         sh 'docker push pregenmed/pgm-articles:latest'
+                    }
+                }
+                stage('Dockerhub Logout') {
+                    steps {
+                         sh 'docker logout'
                     }
                 }
             }
