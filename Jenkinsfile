@@ -3,10 +3,11 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
-        docker 'docker-latest'
     }
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
+        dockerImage = ''
+        registry = 'pregenmed/pgm-articles'
+        registryCredential = 'pregenmed-dockerhub'
     }
     stages {
         stage('Pull Request') {
@@ -40,22 +41,18 @@ pipeline {
                 }
                 stage('Build Image') {
                     steps {
-                        sh 'docker build -t pregenmed/pgm-articles:latest .'
-                    }
-                }
-                stage('Dockerhub Login') {
-                    steps {
-                            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                        script{
+                            dockerImage = docker.build registry
+                        }
                     }
                 }
                 stage('Dockerhub Push') {
                     steps {
-                         sh 'docker push pregenmed/pgm-articles:latest'
-                    }
-                }
-                stage('Dockerhub Logout') {
-                    steps {
-                         sh 'docker logout'
+                        script {
+                            docker.withRegistry('', registryCredential){
+                                dockerImage.push()
+                            }
+                        }
                     }
                 }
             }
@@ -66,7 +63,7 @@ pipeline {
             echo 'Build Completed'
         }
         failure {
-            echo 'Build Failure. Check out logs'
+            echo 'Build Failure. Check out logs.'
         }
     }
 }
