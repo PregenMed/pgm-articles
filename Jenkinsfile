@@ -3,6 +3,7 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
+        docker 'docker-latest'
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
