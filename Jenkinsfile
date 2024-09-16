@@ -52,13 +52,15 @@ pipeline {
                          sh 'docker push pregenmed/pgm-articles:latest'
                     }
                 }
+                stage('Dockerhub Logout') {
+                    steps {
+                         sh 'docker logout'
+                    }
+                }
             }
         }
     }
     post {
-        always {
-            sh 'docker logout'
-        }
         success {
             echo 'Build Completed'
         }
