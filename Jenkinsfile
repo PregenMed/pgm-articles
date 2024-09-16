@@ -41,7 +41,7 @@ pipeline {
                     }
                 }
                 stage('Build Image') {
-                      sh("docker build pregenmed/pgm-articles:latest .")
+                      sh("docker build -t pregenmed/pgm-articles:latest .")
                 }
             }
         }
