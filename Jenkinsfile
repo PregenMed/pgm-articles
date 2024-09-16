@@ -10,7 +10,7 @@ pipeline {
                 branch 'PR/*'
             }
             steps {
-                mvn clean package
+               sh 'mvn clean package'
             }
         }
         stage('Build Branch') {
@@ -21,17 +21,17 @@ pipeline {
                 }
             }
             steps {
-                mvn clean package
+                sh 'mvn clean package'
             }
         }
         stage('Main Branch Deploy') {
             when {
                 branch 'main'
             }
-            stages{
+            stages {
                 stage('Build') {
                     steps {
-                            mvn clean install
+                          sh 'mvn clean install'
                     }
                 }
                 stage('Build Image') {
