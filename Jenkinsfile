@@ -3,6 +3,7 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
+        docker 'latest'
     }
     environment {
         dockerImage = ''
@@ -40,20 +41,7 @@ pipeline {
                     }
                 }
                 stage('Build Image') {
-                    steps {
-                        script{
-                            dockerImage = docker.build registry
-                        }
-                    }
-                }
-                stage('Dockerhub Push') {
-                    steps {
-                        script {
-                            docker.withRegistry('', registryCredential){
-                                dockerImage.push()
-                            }
-                        }
-                    }
+                      sh("docker build pregenmed/pgm-articles:latest .")
                 }
             }
         }
