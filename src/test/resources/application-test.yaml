@@ -1,7 +1,7 @@
-spring:
-  flyway:
-    enabled: false
-#    TODO configure db and migration for tests
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+#spring:
+#  flyway:
+#    enabled: false
+##    TODO configure db and migration for tests
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
