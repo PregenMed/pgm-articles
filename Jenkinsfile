@@ -3,7 +3,7 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
-        dockerTool 'latest'
+        dockerTool 'docker-latest'
     }
     environment {
         dockerImage = ''
