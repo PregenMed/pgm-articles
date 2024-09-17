@@ -40,9 +40,9 @@ pipeline {
                           sh 'mvn clean install'
                     }
                 }
-                stage('Build Image') {
+                stage('Build & Push Image') {
                     steps{
-                      sh("docker build -t pregenmed/pgm-articles:latest .")
+                      sh("mvn spring-boot:build-image -Dregistry.username=$DOCKERHUB_USERNAME -Dregistry.password=$DOCKERHUB_PASSWORD -Dregistry.url=$DOCKERHUB_URL ")
                     }
                 }
             }
