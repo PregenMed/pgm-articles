@@ -3,12 +3,12 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
-        dockerTool 'docker-latest'
+//         dockerTool 'docker-latest'
     }
     environment {
         dockerImage = ''
         registry = 'pregenmed/pgm-articles'
-        registryCredential = 'pregenmed-dockerhub'
+        DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
     }
     stages {
         stage('Pull Request') {
@@ -34,15 +34,18 @@ pipeline {
             when {
                 branch 'main'
             }
-            stages {
-                stage('Build') {
-                    steps {
-                          sh 'mvn clean install'
-                    }
-                }
+//             stages {
+//                 stage('Build') {
+//                     steps {
+//                           sh 'mvn clean install'
+//                     }
+//                 }
                 stage('Build Image') {
                     steps{
-                      sh("docker build -t pregenmed/pgm-articles:latest .")
+                        script{
+                            sh 'podman build -t pregenmed/pgm-articles:lastest .'
+                        }
+//                       sh("docker build -t pregenmed/pgm-articles:latest .")
                     }
                 }
             }
