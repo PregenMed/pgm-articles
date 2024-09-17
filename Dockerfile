@@ -1,4 +1,4 @@
-FROM openjdk:17-oracle
+FROM openjdk:17-jre-slim
 LABEL authors="mateusz-ochab"
 RUN addgroup -S app && adduser -S app -G app
 USER app
