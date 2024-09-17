@@ -34,7 +34,7 @@ pipeline {
             when {
                 branch 'main'
             }
-//             stages {
+            stages {
 //                 stage('Build') {
 //                     steps {
 //                           sh 'mvn clean install'
