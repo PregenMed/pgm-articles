@@ -127,6 +127,7 @@
                         </exclude>
                     </excludes>
                     <image>
+                        <builder>paketobuildpacks/builder:base</builder>
                         <name>pregenmed/pgm-articles</name>
                         <publish>true</publish>
                     </image>
