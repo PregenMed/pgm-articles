@@ -43,7 +43,7 @@ pipeline {
                 stage('Build Image') {
                     steps{
                         script{
-                            docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                            docker.build("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}")
                         }
                     }
                 }
@@ -67,7 +67,7 @@ pipeline {
                stage('Push Docker image') {
                    steps {
                        script {
-                           docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                           docker.image("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}").push()
                        }
                    }
                }
