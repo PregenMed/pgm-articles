@@ -35,11 +35,11 @@ pipeline {
                 branch 'main'
             }
             stages {
-//                 stage('Build') {
-//                     steps {
-//                           sh 'mvn clean install'
-//                     }
-//                 }
+                stage('Build') {
+                    steps {
+                          sh 'mvn clean install'
+                    }
+                }
                 stage('Build Image') {
                     steps{
                         script{
