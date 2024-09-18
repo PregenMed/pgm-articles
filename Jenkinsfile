@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_REGISTRY = 'https://hub.docker.com'
-        DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
+        DOCKERHUB_CREDENTIALS = 'pregenmed-dockerhub'
         DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
         DOCKER_IMAGE_TAG = 'latest'
     }
