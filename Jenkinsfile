@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_REGISTRY = 'https://hub.docker.com'
-        DOCKERHUB_CREDENTIALS = 'pregenmed-dockerhub'
+        DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
         DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
         DOCKER_IMAGE_TAG = 'latest'
     }
@@ -42,33 +42,45 @@ pipeline {
                 }
                 stage('Build Image') {
                     steps{
-                        script{
-                            docker.build("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}")
-                        }
+                            sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG .'
                     }
                 }
                stage('Login to Docker Hub') {
                     steps {
-                        script {
-                            withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS, toolName: 'docker'){
-                                echo "Logged in to Docker Hub"
-
-                            }
-//
-//                             docker.withCredentials([usernamePassword(credentialsId: 'myregistry-login', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
-//
-//                             docker.withRegistry(DOCKERHUB_REGISTRY, DOCKERHUB_CREDENTIALS) {
+                            sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+//                         script {
+//                             withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS, ){
 //                                 echo "Logged in to Docker Hub"
+//                                 docker
 //                             }
-                        }
+//                         }
                     }
                }
 
                stage('Push Docker image') {
                    steps {
-                       script {
-                           docker.image("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}").push()
-                       }
+                            sh "docker push $DOCKER_IMAGE_NAME:DOCKER_IMAGE_TAG"
+                            echo "Image Pushed to registry"
+//                        script {
+//                            docker.image("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}").push()
+//                        }
+                   }
+               }
+               stage('Docker logout') {
+                   steps{
+                        sh 'docker logout'
+                        echo "Docker logged out"
+                   }
+               }
+               stage('Docker image clean up') {
+                   steps{
+                        script {
+                            try {
+                                sh "docker rmi $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                            } catch (Exception e) {
+                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG, message - ${e.getMessage()}"
+                            }
+                        }
                    }
                }
             }
