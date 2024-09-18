@@ -3,12 +3,12 @@ pipeline {
     tools {
         jdk 'jdk-17-latest'
         maven 'maven-3'
-//         dockerTool 'docker-latest'
     }
     environment {
-        dockerImage = ''
-        registry = 'pregenmed/pgm-articles'
+        DOCKERHUB_REGISTRY = 'pregenmed/pgm-articles'
         DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
+        DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
+        DOCKER_IMAGE_TAG = 'latest'
     }
     stages {
         stage('Pull Request') {
@@ -43,11 +43,27 @@ pipeline {
                 stage('Build Image') {
                     steps{
                         script{
-                            sh 'docker build -t pregenmed/pgm-articles:lastest .'
+                            docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
                         }
-//                       sh("docker build -t pregenmed/pgm-articles:latest .")
                     }
                 }
+               stage('Login to Docker Hub') {
+                    steps {
+                        script {
+                            docker.withRegistry(DOCKERHUB_REGISTRY, DOCKERHUB_CREDENTIALS) {
+                                echo "Logged in to Docker Hub"
+                            }
+                        }
+                    }
+               }
+
+               stage('Push Docker image') {
+                   steps {
+                       script {
+                           docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                       }
+                   }
+               }
             }
         }
     }
