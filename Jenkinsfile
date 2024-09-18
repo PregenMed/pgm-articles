@@ -43,7 +43,7 @@ pipeline {
                 stage('Build Image') {
                     steps{
                         script{
-                            sh 'podman build -t pregenmed/pgm-articles:lastest .'
+                            sh 'docker build -t pregenmed/pgm-articles:lastest .'
                         }
 //                       sh("docker build -t pregenmed/pgm-articles:latest .")
                     }
