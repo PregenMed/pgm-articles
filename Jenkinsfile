@@ -59,7 +59,7 @@ pipeline {
 
                stage('Push Docker image') {
                    steps {
-                            sh "docker push $DOCKER_IMAGE_NAME:DOCKER_IMAGE_TAG"
+                            sh "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
                             echo "Image Pushed to registry"
 //                        script {
 //                            docker.image("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}").push()
