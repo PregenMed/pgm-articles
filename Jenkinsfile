@@ -5,7 +5,6 @@ pipeline {
         maven 'maven-3'
     }
     environment {
-        DOCKERHUB_REGISTRY = 'pregenmed/pgm-articles'
         DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
         DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
         DOCKER_IMAGE_TAG = 'latest'
@@ -50,7 +49,7 @@ pipeline {
                stage('Login to Docker Hub') {
                     steps {
                         script {
-                            docker.withRegistry(DOCKERHUB_REGISTRY, DOCKERHUB_CREDENTIALS) {
+                            docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                                 echo "Logged in to Docker Hub"
                             }
                         }
