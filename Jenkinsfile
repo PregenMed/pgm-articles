@@ -8,7 +8,7 @@ pipeline {
         DOCKERHUB_REGISTRY = 'https://hub.docker.com'
         DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
         DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
-        DOCKER_IMAGE_TAG = 'latest'
+        DOCKER_IMAGE_LATEST_TAG = 'latest'
     }
     stages {
         stage('Pull Request') {
