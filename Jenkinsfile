@@ -50,9 +50,16 @@ pipeline {
                stage('Login to Docker Hub') {
                     steps {
                         script {
-                            docker.withRegistry(DOCKERHUB_REGISTRY, DOCKERHUB_CREDENTIALS) {
+                            withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS, toolName: 'docker'){
                                 echo "Logged in to Docker Hub"
+
                             }
+//
+//                             docker.withCredentials([usernamePassword(credentialsId: 'myregistry-login', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
+//
+//                             docker.withRegistry(DOCKERHUB_REGISTRY, DOCKERHUB_CREDENTIALS) {
+//                                 echo "Logged in to Docker Hub"
+//                             }
                         }
                     }
                }
