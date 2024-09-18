@@ -40,45 +40,45 @@ pipeline {
                           sh 'mvn clean install'
                     }
                 }
-                stage('Build Image') {
+                stage('Build image') {
                     steps{
-                            sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG .'
+                            sh "docker build -t $DOCKER_IMAGE_NAME:${BUILD_NUMBER} -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG ."
                     }
                 }
-               stage('Login to Docker Hub') {
+               stage('Login to registry') {
                     steps {
+                            echo "Login to registry"
                             sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                         script {
-//                             withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS, ){
-//                                 echo "Logged in to Docker Hub"
-//                                 docker
-//                             }
-//                         }
                     }
                }
 
-               stage('Push Docker image') {
+               stage('Docker push image') {
                    steps {
-                            sh "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
-                            echo "Image Pushed to registry"
-//                        script {
-//                            docker.image("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}").push()
-//                        }
+                            echo "Pushing image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+                            sh "docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+
+                            echo "Pushing image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
+                            sh "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
                    }
                }
                stage('Docker logout') {
-                   steps{
+                   steps {
+                        echo "Docker logging out..."
                         sh 'docker logout'
-                        echo "Docker logged out"
                    }
                }
                stage('Docker image clean up') {
                    steps{
                         script {
                             try {
-                                sh "docker rmi $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                                sh "docker rmi $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
                             } catch (Exception e) {
-                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG, message - ${e.getMessage()}"
+                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}, message - ${e.getMessage()}"
+                            }
+                            try {
+                                sh "docker rmi $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
+                            } catch (Exception e) {
+                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG, message - ${e.getMessage()}"
                             }
                         }
                    }
