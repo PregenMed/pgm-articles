@@ -5,4 +5,4 @@ USER app
 
 WORKDIR /opt/pregenmed
 COPY target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/opt/pregenmed/app.jar"]
