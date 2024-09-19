@@ -1,7 +1,7 @@
 serviceApp:
+  containerPort: 8888
   image:
     repository: pregenmed/pgm-articles
     tag: latest
     pullPolicy: Always
-    containerPort: 8888
     appPort: 8888
