@@ -4,7 +4,7 @@ spring:
     name: pgm-articles
   #    DATABASE
   datasource:
-    url: jdbc:postgresql://${PGM_ARTICLE_DB_URL:localhost}:${PGM_ARTICLE_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-article-db}?current_schema=${PGM_ARTICLE_SCHEMA:pgmarticle}&stringtype=unspecified
+    url: jdbc:postgresql://${PGM_ARTICLES_DB_URL:localhost}:${PGM_ARTICLE_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-article-db}?current_schema=${PGM_ARTICLE_SCHEMA:pgmarticle}&stringtype=unspecified
     username: ${PGM_ARTICLES_DB_USERNAME:pgm}
     password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
     hikari:
