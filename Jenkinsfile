@@ -9,6 +9,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('pregenmed-dockerhub')
         DOCKER_IMAGE_NAME = 'pregenmed/pgm-articles'
         DOCKER_IMAGE_LATEST_TAG = 'latest'
+
     }
     stages {
         stage('Pull Request') {
@@ -86,7 +87,9 @@ pipeline {
                stage('Trigger other pipeline'){
                     steps {
                         script {
-                            build job: 'pregenmed/example-pipeline'
+                            build job: 'pregenmed/pgm-articles-deploy-test', parameters: [
+                                string(name: 'BUILDNUMBER', value: ${BUILD_NUMBER})
+                            ]
                         }
                     }
 
