@@ -86,7 +86,7 @@ pipeline {
                stage('Trigger other pipeline'){
                     steps {
                         script {
-                            build job: 'example-pipeline'
+                            build job: 'pregenmed/example-pipeline'
                         }
                     }
 
