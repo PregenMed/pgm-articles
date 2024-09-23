@@ -88,7 +88,7 @@ pipeline {
                     steps {
                         script {
                             build job: 'pregenmed/pgm-articles-deploy-test', parameters: [
-                                string(name: 'BUILDNUMBER', value: ${BUILD_NUMBER})
+                                string(name: 'BUILDNUMBER', value: "${BUILD_NUMBER}")
                             ]
                         }
                     }
