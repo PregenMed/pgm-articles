@@ -84,7 +84,7 @@ pipeline {
 //                         }
 //                    }
 //                }
-               stage('Trigger other pipeline'){
+               stage('Trigger job - deploy test env'){
                     steps {
                         script {
                             build job: 'pregenmed/pgm-articles-deploy-test', parameters: [
