@@ -1,10 +1,9 @@
-
 spring:
   application:
     name: pgm-articles
   #    DATABASE
   datasource:
-    url: jdbc:postgresql://${PGM_ARTICLES_DB_URL:localhost}:${PGM_ARTICLE_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-article-db}?current_schema=${PGM_ARTICLE_SCHEMA:pgmarticle}&stringtype=unspecified
+    url: jdbc:postgresql://${PGM_ARTICLES_DB_URL:localhost}:${PGM_ARTICLES_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-articles-db}?current_schema=${PGM_ARTICLES_SCHEMA:pgmarticles}&stringtype=unspecified
     username: ${PGM_ARTICLES_DB_USERNAME:pgm}
     password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
     hikari:
@@ -22,13 +21,13 @@ spring:
     properties:
       hibernate:
         format-sql: true
-        default_schema: ${PGM_ARTICLE_SCHEMA:pgm-article}
+        default_schema: ${PGM_ARTICLES_SCHEMA:pgm-articles}
 
   #FLYWAY
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/${PGM_ARTICLES_DB_NAME:pgm-article-db}
-    schemas: ${PGM_ARTICLE_SCHEMA:pgmarticle}
+    url: jdbc:postgresql://localhost:5432/${PGM_ARTICLES_DB_NAME:pgm-articles-db}
+    schemas: ${PGM_ARTICLES_SCHEMA:pgmarticles}
     user: ${PGM_ARTICLES_DB_USERNAME:pgm}
     password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
     locations: classpath:db/migration
