@@ -36,54 +36,54 @@ pipeline {
                 branch 'main'
             }
             stages {
-//                 stage('Build') {
-//                     steps {
-//                           sh 'mvn clean install'
-//                     }
-//                 }
-//                 stage('Build image') {
-//                     steps{
-//                             sh "docker build -t $DOCKER_IMAGE_NAME:${BUILD_NUMBER} -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG ."
-//                     }
-//                 }
-//                stage('Login to registry') {
-//                     steps {
-//                             echo "Login to registry"
-//                             sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                     }
-//                }
-//
-//                stage('Docker push image') {
-//                    steps {
-//                             echo "Pushing image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
-//                             sh "docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
-//
-//                             echo "Pushing image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
-//                             sh "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
-//                    }
-//                }
-//                stage('Docker logout') {
-//                    steps {
-//                         echo "Docker logging out..."
-//                         sh 'docker logout'
-//                    }
-//                }
-//                stage('Docker image clean up') {
-//                    steps{
-//                         script {
-//                             try {
-//                                 sh "docker rmi $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
-//                             } catch (Exception e) {
-//                                 echo "Error - cannot remove image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}, message - ${e.getMessage()}"
-//                             }
-//                             try {
-//                                 sh "docker rmi $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
-//                             } catch (Exception e) {
-//                                 echo "Error - cannot remove image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG, message - ${e.getMessage()}"
-//                             }
-//                         }
-//                    }
-//                }
+                stage('Build') {
+                    steps {
+                          sh 'mvn clean install'
+                    }
+                }
+                stage('Build image') {
+                    steps{
+                            sh "docker build -t $DOCKER_IMAGE_NAME:${BUILD_NUMBER} -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG ."
+                    }
+                }
+               stage('Login to registry') {
+                    steps {
+                            echo "Login to registry"
+                            sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    }
+               }
+
+               stage('Docker push image') {
+                   steps {
+                            echo "Pushing image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+                            sh "docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+
+                            echo "Pushing image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
+                            sh "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
+                   }
+               }
+               stage('Docker logout') {
+                   steps {
+                        echo "Docker logging out..."
+                        sh 'docker logout'
+                   }
+               }
+               stage('Docker image clean up') {
+                   steps{
+                        script {
+                            try {
+                                sh "docker rmi $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+                            } catch (Exception e) {
+                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:${BUILD_NUMBER}, message - ${e.getMessage()}"
+                            }
+                            try {
+                                sh "docker rmi $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG"
+                            } catch (Exception e) {
+                                echo "Error - cannot remove image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_LATEST_TAG, message - ${e.getMessage()}"
+                            }
+                        }
+                   }
+               }
                stage('Trigger job - deploy test env'){
                     steps {
                         script {
