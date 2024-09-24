@@ -26,7 +26,7 @@ spring:
   #FLYWAY
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/${PGM_ARTICLES_DB_NAME:pgm-articles-db}
+    url: jdbc:postgresql://${PGM_ARTICLES_DB_URL:localhost}:${PGM_ARTICLES_DB_PORT:5432}/${PGM_ARTICLES_DB_NAME:pgm-articles-db}
     schemas: ${PGM_ARTICLES_SCHEMA:pgmarticles}
     user: ${PGM_ARTICLES_DB_USERNAME:pgm}
     password: ${PGM_ARTICLES_DB_PASSWORD:pgm}
