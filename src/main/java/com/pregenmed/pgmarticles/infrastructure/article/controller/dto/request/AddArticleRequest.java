@@ -3,7 +3,6 @@ package com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pregenmed.pgmarticles.domain.article.model.ArticleStatus;
-import com.pregenmed.pgmarticles.infrastructure.config.UUIDDeserializer;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,6 @@ public class AddArticleRequest {
             @Size(max = 255, message = "{validation.article.title.size.too_long}")
     })
     private String title;
-    @JsonDeserialize(using = UUIDDeserializer.class)
     private UUID authorUuid;
     @Size.List({
             @Size(min = 1, message = "{validation.article.content.size.too_short}"),
