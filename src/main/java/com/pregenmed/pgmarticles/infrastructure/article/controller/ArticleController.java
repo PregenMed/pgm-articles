@@ -23,6 +23,8 @@ import java.util.UUID;
 @Tag(name = "Article")
 public interface ArticleController {
 
+    String dummyEndpoint();
+
     //TODO add javadoc
     @Operation(
             description = "Give me article UUID and I will return you article",
