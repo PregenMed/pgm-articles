@@ -24,7 +24,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 
-@Table(name = "article", schema = "pgmarticle",
+@Table(name = "article", schema = "pgmarticles",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"uuid", "author_uuid"})},
         indexes = {
