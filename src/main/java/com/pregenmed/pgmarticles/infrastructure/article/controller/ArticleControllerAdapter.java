@@ -49,6 +49,12 @@ public class ArticleControllerAdapter implements ArticleController {
     private final UpdateArticleStatusUseCase updateArticleStatusUseCase;
 
     @Override
+    @GetMapping("/dummy")
+    public String dummyEndpoint() {
+        return "response from dummy endpoint";
+    }
+
+    @Override
     @GetMapping("/{articleUuid}")
     @ResponseStatus(OK)
     public GetArticleByUuidResponse getArticleByUuid(@PathVariable UUID articleUuid) throws Exception {
