@@ -6,7 +6,6 @@ import com.pregenmed.pgmarticles.domain.article.usecase.GetArticleUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleContentUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleStatusUseCase;
 import com.pregenmed.pgmarticles.domain.article.usecase.UpdateArticleTitleUseCase;
-import com.pregenmed.pgmarticles.domain.article.usecase.adapter.UpdateArticleTitleUseCaseAdapter;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.AddArticleRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleContentRequest;
 import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.request.UpdateArticleStatusRequest;
@@ -19,7 +18,6 @@ import com.pregenmed.pgmarticles.infrastructure.article.controller.dto.response.
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +35,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
-
 @RestController
 @RequestMapping("/api/v1/articles")
 public class ArticleControllerAdapter implements ArticleController {
@@ -51,7 +48,7 @@ public class ArticleControllerAdapter implements ArticleController {
     @Override
     @GetMapping("/dummy")
     public String dummyEndpoint() {
-        return "response from dummy endpoint";
+        return "response from my dummy endpoint";
     }
 
     @Override
