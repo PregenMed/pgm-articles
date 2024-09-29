@@ -48,7 +48,7 @@ public class ArticleControllerAdapter implements ArticleController {
     @Override
     @GetMapping("/dummy")
     public String dummyEndpoint() {
-        return "response from my dummy endpoint";
+        return "response from my dummy endpo";
     }
 
     @Override
